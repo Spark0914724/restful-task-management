@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.support.WebExchangeBindException
 
 @RestControllerAdvice
-class `GlobalExceptionHandler.kt` {
+class GlobalExceptionHandler {
 
     @ExceptionHandler(TaskNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -34,4 +34,9 @@ class TaskController(private val taskService: TaskService) {
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateStatusRequest
     ) = taskService.updateStatus(id, request)
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteTask(@PathVariable id: Long): Mono<Void> =
+        taskService.deleteTask(id)
 }

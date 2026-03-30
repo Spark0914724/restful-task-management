@@ -17,5 +17,11 @@ class TaskController(private val taskService: TaskService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun createTask(@Valid @RequestBody request: CreateTaskRequest) =
         taskService.createTask(request)
-    
+
+    @GetMapping
+    fun getTasks(
+        @RequestParam page: Int,
+        @RequestParam size: Int,
+        @RequestParam(required = false) status: TaskStatus?
+    ) = taskService.getTasks(page, size, status)
 }

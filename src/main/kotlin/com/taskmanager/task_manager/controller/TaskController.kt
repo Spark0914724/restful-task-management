@@ -24,4 +24,14 @@ class TaskController(private val taskService: TaskService) {
         @RequestParam size: Int,
         @RequestParam(required = false) status: TaskStatus?
     ) = taskService.getTasks(page, size, status)
+
+    @GetMapping("/{id}")
+    fun getTaskById(@PathVariable id: Long) =
+        taskService.getTaskById(id)
+
+    @PatchMapping("/{id}/status")
+    fun updateStatus(
+        @PathVariable id: Long,
+        @Valid @RequestBody request: UpdateStatusRequest
+    ) = taskService.updateStatus(id, request)
 }

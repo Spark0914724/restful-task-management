@@ -34,7 +34,6 @@ dependencies {
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("io.mockk:mockk:1.13.10")
-	testImplementation("io.projectreactor:reactor-test")
 
 }
 

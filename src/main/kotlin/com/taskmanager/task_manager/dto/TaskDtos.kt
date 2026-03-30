@@ -1,5 +1,6 @@
 package com.taskmanager.task_manager.dto
 
+import com.taskmanager.task_manager.model.Task
 import com.taskmanager.task_manager.model.TaskStatus
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -31,4 +32,13 @@ data class PageResponse<T>(
     val size: Int,
     val totalElements: Long,
     val totalPages: Int
+)
+
+fun Task.toResponse() = TaskResponse(
+    id = id,
+    title = title,
+    description = description,
+    status = status,
+    createdAt = createdAt,
+    updatedAt = updatedAt
 )

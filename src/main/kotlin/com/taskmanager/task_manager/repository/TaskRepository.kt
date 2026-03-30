@@ -3,13 +3,15 @@ package com.taskmanager.task_manager.repository
 import com.taskmanager.task_manager.model.Task
 import com.taskmanager.task_manager.model.TaskStatus
 import org.springframework.jdbc.core.simple.JdbcClient
+import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.stereotype.Repository
+import java.sql.ResultSet
 import java.time.LocalDateTime
 
 @Repository
 class TaskRepository(private val jdbcClient: JdbcClient) {
 
-    private fun rowMapper(rs: java.sql.ResultSet) = Task(
+    private fun rowMapper(rs: ResultSet) = Task(
         id = rs.getLong("id"),
         title = rs.getString("title"),
         description = rs.getString("description"),
@@ -20,7 +22,8 @@ class TaskRepository(private val jdbcClient: JdbcClient) {
 
     fun save(task: Task): Task {
         val now = LocalDateTime.now()
-        val id = jdbcClient.sql(
+        val keyHolder = GeneratedKeyHolder()
+        jdbcClient.sql(
             "INSERT INTO tasks (title, description, status, created_at, updated_at) VALUES (:title, :description, :status, :createdAt, :updatedAt)"
         )
             .param("title", task.title)
@@ -28,8 +31,9 @@ class TaskRepository(private val jdbcClient: JdbcClient) {
             .param("status", task.status.name)
             .param("createdAt", now)
             .param("updatedAt", now)
-            .update()
-        return findAll(0, 1, task.status).first()
+            .update(keyHolder)
+        val id = keyHolder.key!!.toLong()
+        return task.copy(id = id, createdAt = now, updatedAt = now)
     }
 
     fun findById(id: Long): Task? =

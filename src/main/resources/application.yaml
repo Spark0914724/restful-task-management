@@ -9,6 +9,9 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2-console
+  webflux:
+    static-path-pattern: /**
   flyway:
     enabled: true
     locations: classpath:db/migration

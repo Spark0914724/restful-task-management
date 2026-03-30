@@ -1,0 +1,21 @@
+package com.taskmanager.task_manager.controller
+
+import com.taskmanager.task_manager.dto.CreateTaskRequest
+import com.taskmanager.task_manager.dto.UpdateStatusRequest
+import com.taskmanager.task_manager.model.TaskStatus
+import com.taskmanager.task_manager.service.TaskService
+import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Mono
+
+@RestController
+@RequestMapping("/api/tasks")
+class TaskController(private val taskService: TaskService) {
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createTask(@Valid @RequestBody request: CreateTaskRequest) =
+        taskService.createTask(request)
+    
+}
